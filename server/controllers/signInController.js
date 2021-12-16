@@ -39,7 +39,7 @@ module.exports = {
     check_signin: (req, res) => {
         let username = req.query.username;
         let password = req.query.password;
-        let sql = 'select * from users where username = ? and password = ?'
+        let sql = 'select * from user where username = ? and password = ?'
         db.query(sql, [username, password], (err, response) => {
             if (err) throw err
             res.json(response)
