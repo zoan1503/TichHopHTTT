@@ -1,15 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { RadioButton, TextInput } from "react-native-paper";
 import CustomCheckbox from "../common-component/CustomRadioCheckbox";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-const InitialScreen = ({}) => {
+import Axios from 'axios';
+
+const InitialScreen = ({ }) => {
   const [text, setText] = React.useState("Em Quang óc chó");
   const [checked, setChecked] = React.useState(false);
-  const handleChecked = () => {
-    setChecked(!checked);
-  };
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    Axios
+      .get("http://192.168.16.101:8000/signin/getalluserinfo", {
+        params: {
+          'id': 4
+        }
+      })
+      .then(response => setUser(response.data[0]));
+  }, []);
+  function changedate(date) {
+    if (typeof date !== 'undefined') {
+      let ndate = date.substring(0, 10)
+      let result = ndate.substring(8, 10) + '/' + ndate.substring(5, 7) + '/' + ndate.substring(0, 4)
+      return result
+    }
+    else
+      return date;
+  }
   return (
     <ScrollView>
       <View style={{ alignSelf: "center", marginTop: 20 }}>
@@ -23,106 +41,41 @@ const InitialScreen = ({}) => {
           <Text>Họ và tên *</Text>
           <TextInput
             mode="outlined"
-            value={text}
-            onChangeText={(text) => setText(text)}
+            value={user.fullname}
           />
         </View>
         <View style={{ marginTop: 20 }}>
           <Text>Ngày tháng năm sinh *</Text>
           <TextInput
             mode="outlined"
-            value={"19/04/1999s"}
-            onChangeText={(text) => setText(text)}
+            value={changedate(user.birth)}
           />
         </View>
         <View style={{ marginTop: 20 }}>
-          <Text style={{ marginBottom: 5 }}>Giới tính *</Text>
-          <View style={{ flexDirection: "row" }}>
-            <CustomCheckbox
-              label="Nam"
-              checked={checked}
-              onChecked={handleChecked}
-            />
-            <CustomCheckbox
-              label="Nữ"
-              checked={checked}
-              onChecked={handleChecked}
-            />
-            <CustomCheckbox
-              label="Khác"
-              checked={checked}
-              onChecked={handleChecked}
-            />
-          </View>
-        </View>
-        <View style={{ marginTop: 20 }}>
-          <Text>Số điện thoại *</Text>
+          <Text>Giới tính *</Text>
           <TextInput
             mode="outlined"
-            value={"0855451999"}
-            onChangeText={(text) => setText(text)}
+            value={user.gender == 1 ? "Nam" : "Nữ"}
           />
         </View>
         <View style={{ marginTop: 20 }}>
-          <Text>Tỉnh/Thành phố *</Text>
+          <Text>Số CMND / CCCD *</Text>
           <TextInput
             mode="outlined"
-            value={"Thành phố Hà Nội"}
-            onChangeText={(text) => setText(text)}
+            value={user.cccd}
           />
-          <TouchableOpacity
-            style={{
-              position: "absolute",
-              top: 35,
-              right: 10,
-              height: 30,
-              width: 30,
-            }}
-          >
-            <MaterialIcons size={38} name="arrow-drop-down" />
-          </TouchableOpacity>
         </View>
         <View style={{ marginTop: 20 }}>
-          <Text>Quận/Huyện *</Text>
+          <Text>Địa chỉ *</Text>
           <TextInput
             mode="outlined"
-            value={"0855451999"}
-            onChangeText={(text) => setText(text)}
+            value={user.address}
           />
-          <TouchableOpacity
-            style={{
-              position: "absolute",
-              top: 35,
-              right: 10,
-              height: 30,
-              width: 30,
-            }}
-          >
-            <MaterialIcons size={38} name="arrow-drop-down" />
-          </TouchableOpacity>
         </View>
-        <View style={{ marginTop: 20 }}>
-          <Text>Phường/Xã *</Text>
-          <TextInput
-            mode="outlined"
-            value={"0855451999"}
-            onChangeText={(text) => setText(text)}
-          />
-          <TouchableOpacity
-            style={{
-              position: "absolute",
-              top: 35,
-              right: 10,
-              height: 30,
-              width: 30,
-            }}
-          >
-            <MaterialIcons size={38} name="arrow-drop-down" />
-          </TouchableOpacity>
-        </View>
+
       </View>
       <View>
-        <Text>Fôter</Text>
+        <Text></Text>
       </View>
     </ScrollView>
   );

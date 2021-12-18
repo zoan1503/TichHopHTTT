@@ -29,9 +29,9 @@ module.exports = {
         })
     },
     get_all_user_info: (req, res) => {
-        let id_user = req.query.id_user;
-        let sql = 'select * from users where id_user = ?'
-        db.query(sql, [id_user], (err, response) => {
+        let id = req.query.id;
+        let sql = 'select * from user where id = ?'
+        db.query(sql, [id], (err, response) => {
             if (err) throw err
             res.json(response)
         })

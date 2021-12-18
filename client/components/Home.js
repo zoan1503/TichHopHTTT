@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import Entypo from "react-native-vector-icons/Entypo";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -6,10 +6,20 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-
+import Axios from 'axios';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
+    const [user, setUser] = useState({});
+    useEffect(() => {
+        Axios
+            .get("http://192.168.16.101:8000/signin/getalluserinfo", {
+                params: {
+                    'id': 4
+                }
+            })
+            .then(response => setUser(response.data[0]));
+    }, []);
     return (
         <View style={{ backgroundColor: "#fff", flex: 1 }}>
             <View style={styles.container}>
@@ -25,9 +35,8 @@ const HomeScreen = () => {
                                 fontSize: 25,
                                 color: "black",
                                 fontWeight: "500",
-                            }}
-                        >
-                            Đỗ Tiến Thành
+                            }}>
+                            {user.fullname}
                         </Text>
                     </View>
                 </View>
@@ -62,7 +71,7 @@ const HomeScreen = () => {
                                         fontWeight: "900",
                                     }}
                                 >
-                                    Khai báo Y tế
+                                    Test thông tin cá nhân
                                 </Text>
                             </View>
                         </TouchableOpacity>
@@ -131,7 +140,7 @@ const HomeScreen = () => {
                                         fontWeight: "900",
                                     }}
                                 >
-                                    Tư vấn F0
+                                    Test đăng ký
                                 </Text>
                             </View>
                         </TouchableOpacity>
@@ -164,7 +173,7 @@ const HomeScreen = () => {
                                     marginTop: 10,
                                 }}
                             >
-                                Phản ứng sau tiêm
+                                Test đăng nhập
                             </Text>
                         </View>
                         <View
