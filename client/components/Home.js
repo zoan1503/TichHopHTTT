@@ -208,7 +208,7 @@ const HomeScreen = () => {
                                 width: 110,
                             }}
                         >
-                            <TouchableOpacity style={styles.backgroundIcon}>
+                            <TouchableOpacity style={styles.backgroundIcon} onPress={() => { navigation.navigate("Map") }}>
                                 <Entypo
                                     name="calendar"
                                     size={45}
@@ -223,7 +223,7 @@ const HomeScreen = () => {
                                     marginTop: 10,
                                 }}
                             >
-                                Đặt hẹn khám
+                                Check Map
                             </Text>
                         </View>
                     </View>

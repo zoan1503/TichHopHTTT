@@ -27,6 +27,7 @@ function App() {
           <Stack.Screen options={{ title: "Thông tin cá nhân" }} name="Initial" component={InitialScreen} />
           <Stack.Screen options={{ title: "Đăng ký" }} name="SignUp" component={SignUp} />
           <Stack.Screen options={{ title: "Đăng nhập" }} name="Login" component={Login} />
+          <Stack.Screen options={{ title: "Bản đồ" }} name="Map" component={Map} />
           <Stack.Screen name="Advise" component={Advise} />
         </Stack.Navigator>
       </NavigationContainer>
