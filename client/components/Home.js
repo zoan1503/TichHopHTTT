@@ -223,7 +223,7 @@ const HomeScreen = () => {
                                     marginTop: 10,
                                 }}
                             >
-                                Check Map
+                                Test chức năng Map
                             </Text>
                         </View>
                     </View>
