@@ -11,6 +11,7 @@ import Certificate from './components/Certificate';
 import Advise from './components/Advise';
 import SignUp from './components/SignUp'
 import Login from './components/Login'
+import Map from './components/Map'
 const Stack = createNativeStackNavigator();
 
 function App() {
