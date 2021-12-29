@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Text, View, StyleSheet, Image, TouchableOpacity} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { RadioButton, TextInput } from "react-native-paper";
 import CustomCheckbox from "../common-component/CustomRadioCheckbox";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-const SignUp = ({ }) => {
+const Login = ({ }) => {
     const navigation = useNavigation();
     const [username, setusername] = useState('');
     const [password, setpassword] = useState('');
@@ -25,9 +26,23 @@ const SignUp = ({ }) => {
                 else {
                     // localStorage.setItem({'id_user': response.data[0].id_user}, {'isLogged' : 1} )
                     setinfo(response.data[0])
-                    // console.log(this.state.info.fullname)
-                    // localStorage.setItem('id_user', info.id)
-                    // localStorage.setItem('isLogged', 1)
+                    
+                    // _storeData = async () => {
+                    //     try {
+                    //       await AsyncStorage.setItem(
+                    //         'id',
+                    //         info.id
+                    //       );
+                    //       AsyncStorage.setItem(
+                    //         'isLogged',
+                    //         1
+                    //       );
+                    //     } catch (error) {
+                    //       // Error saving data
+                    //     }
+                    //   };
+                    //console.log(AsyncStorage.getItem('id'))
+                    
                     navigation.navigate("Home")
                 }
             });
@@ -78,6 +93,14 @@ const SignUp = ({ }) => {
                     onPress={() => { handleSubmit() }}>
                     <Text style={{ fontSize: 18, color: '#000' }}>Đăng nhập</Text>
                 </TouchableOpacity>
+                <Text style={{ marginTop: 20, alignSelf: "center" }}>
+                    Chưa có tài khoản?
+                </Text>
+                <TouchableOpacity
+                    style={{ marginTop: 20, alignSelf: "center" }}
+                    onPress={() => { handleSubmit() }}>
+                    <Text style={{ fontSize: 18, color: '#000' }} onPress={() => { navigation.navigate("SignUp") }}>Đăng ký</Text>
+                </TouchableOpacity>
             </View>
             <View>
                 <Text></Text>
@@ -93,7 +116,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SignUp;
+export default Login;
 
 // import React, { Component } from 'react';
 // import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button, Image } from 'react-native';

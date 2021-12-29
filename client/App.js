@@ -7,24 +7,27 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HomeScreen from './components/Home'
 import InitialScreen from './components/InitialScreen'
-import Certificate from './components/Certificate';
-import Advise from './components/Advise';
+import Certificate from './components/HaNoi';
+import Advise from './components/VinhPhuc';
 import SignUp from './components/SignUp'
 import Login from './components/Login'
 import Map from './components/Map'
+import HaNoi from './components/HaNoi';
+import VinhPhuc from './components/VinhPhuc';
 const Stack = createNativeStackNavigator();
 
 function App() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <NavigationContainer>
-        <Stack.Navigator
+        <Stack.Navigator initialRouteName='Login'
         // screenOptions={{
         //   headerShown: false
         // }}
         >
           <Stack.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
-          <Stack.Screen options={{ title: "Thông tin cá nhân" }} name="Certificate" component={Certificate} />
+          <Stack.Screen options={{ title: "Ca nhiễm Hà Nội" }} name="HaNoi" component={HaNoi} />
+          <Stack.Screen options={{ title: "Ca nhiễm Vĩnh Phúc" }} name="VinhPhuc" component={VinhPhuc} />
           <Stack.Screen options={{ title: "Thông tin cá nhân" }} name="Initial" component={InitialScreen} />
           <Stack.Screen options={{ title: "Đăng ký" }} name="SignUp" component={SignUp} />
           <Stack.Screen options={{ title: "Đăng nhập" }} name="Login" component={Login} />

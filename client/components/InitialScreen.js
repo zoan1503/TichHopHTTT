@@ -5,11 +5,25 @@ import { RadioButton, TextInput } from "react-native-paper";
 import CustomCheckbox from "../common-component/CustomRadioCheckbox";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const InitialScreen = ({ }) => {
   const [text, setText] = React.useState("Em Quang óc chó");
   const [checked, setChecked] = React.useState(false);
   const [user, setUser] = useState({});
+  // let id = 0
+  // const _retrieveData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('id');
+  //     if (value !== null) {
+  //       // We have data!!
+  //       id = value
+  //     }
+  //   } catch (error) {
+  //     // Error retrieving data
+  //   }
+  // };
+  //let id = AsyncStorage.getItem('id')
   useEffect(() => {
     Axios
       .get("http://192.168.16.101:8000/signin/getalluserinfo", {

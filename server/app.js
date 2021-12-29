@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var signUpRouter = require('./routes/signup');
 var signInRouter = require('./routes/signin');
+var numcaseRouter = require('./routes/numcase');
 
 var app = express();
 
@@ -25,10 +26,12 @@ app.use(cors({ origin: 'http://localhost:19002' }));
 
 
 
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/signup', signUpRouter);
 app.use('/signin', signInRouter);
+app.use('/numcase', numcaseRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -45,5 +48,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;

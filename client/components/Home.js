@@ -80,7 +80,7 @@ const HomeScreen = () => {
                         colors={['#9AEB0C', '#24CF5F']}
                         style={{ borderRadius: 15 }}
                     >
-                        <TouchableOpacity style={styles.second} onPress={() => { navigation.navigate("Certificate") }}>
+                        <TouchableOpacity style={styles.second} onPress={() => { navigation.navigate("HaNoi") }}>
                             <View
                                 style={{
                                     width: 50,
@@ -105,7 +105,7 @@ const HomeScreen = () => {
                                         fontWeight: "900",
                                     }}
                                 >
-                                    Chứng nhận ngừa Covid
+                                    Hà Nội
                                 </Text>
                             </View>
                         </TouchableOpacity>
@@ -115,7 +115,7 @@ const HomeScreen = () => {
 
                         style={{ borderRadius: 15 }}
                     >
-                        <TouchableOpacity style={styles.third} onPress={() => { navigation.navigate("SignUp") }}>
+                        <TouchableOpacity style={styles.third} onPress={() => { navigation.navigate("VinhPhuc") }}>
                             <View
                                 style={{
                                     width: 50,
@@ -140,7 +140,7 @@ const HomeScreen = () => {
                                         fontWeight: "900",
                                     }}
                                 >
-                                    Test đăng ký
+                                    Vĩnh Phúc
                                 </Text>
                             </View>
                         </TouchableOpacity>
@@ -183,7 +183,7 @@ const HomeScreen = () => {
                                 width: 110,
                             }}
                         >
-                            <TouchableOpacity style={styles.backgroundIcon}>
+                            <TouchableOpacity style={styles.backgroundIcon} onPress={() => { navigation.navigate("SignUp") }}>
                                 <MaterialCommunityIcons
                                     name="needle"
                                     size={45}
@@ -198,7 +198,7 @@ const HomeScreen = () => {
                                     marginTop: 10,
                                 }}
                             >
-                                Đăng ký tiêm chủng
+                                Test đăng ký
                             </Text>
                         </View>
                         <View
