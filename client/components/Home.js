@@ -285,7 +285,7 @@ const HomeScreen = () => {
                                 width: 110,
                             }}
                         >
-                            <TouchableOpacity style={styles.backgroundIcon} onPress={() => { navigation.navigate("SignUp") }}>
+                            <TouchableOpacity style={styles.backgroundIcon} onPress={() => { navigation.navigate("Move") }}>
                                 <MaterialCommunityIcons
                                     name="calendar"
                                     size={45}

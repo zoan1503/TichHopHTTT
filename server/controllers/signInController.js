@@ -20,6 +20,14 @@ module.exports = {
             res.json(response)
         })
     },
+    get_location: (req, res) => {
+        id = req.query.id;
+        let sql = 'select * from location where id = ?'
+        db.query(sql, [id], (err, response) => {
+            if (err) throw err
+            res.json(response)
+        })
+    },
     add_location: (req, res) => {
         const id = req.body.id;
         const lat = req.body.lat;
@@ -32,7 +40,7 @@ module.exports = {
                 res.send(err)
             }
             else {
-                res.send({ error: false, data: results, message: 'Location has been add successfully!'});
+                res.send({ error: false, data: results, message: 'Location has been add successfully!' });
             }
 
         });

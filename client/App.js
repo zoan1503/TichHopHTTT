@@ -14,6 +14,7 @@ import Login from './components/Login'
 import Map from './components/Map'
 import HaNoi from './components/HaNoi';
 import VinhPhuc from './components/VinhPhuc';
+import Move from './components/Move';
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Stack.Screen options={{ title: "Đăng ký" }} name="SignUp" component={SignUp} />
           <Stack.Screen options={{ title: "Đăng nhập" }} name="Login" component={Login} />
           <Stack.Screen options={{ title: "Bản đồ" }} name="Map" component={Map} />
+          <Stack.Screen options={{ title: "Lịch trình" }} name="Move" component={Move} />
           <Stack.Screen name="Advise" component={Advise} />
         </Stack.Navigator>
       </NavigationContainer>

@@ -40,7 +40,7 @@ const SignUp = ({ }) => {
             </View>
             <View style={{ marginHorizontal: 15 }}>
                 <View>
-                    <Text>Số điện thoại *</Text>
+                    <Text>Tên đăng nhập *</Text>
                     <TextInput
                         mode="outlined"
                         onChangeText={(text) => setusername(text)}
@@ -51,6 +51,7 @@ const SignUp = ({ }) => {
                     <TextInput
                         mode="outlined"
                         onChangeText={(text) => setpassword(text)}
+                        secureTextEntry={true}
                     />
                 </View>
                 <View style={{ marginTop: 20 }}>
