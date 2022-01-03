@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Text, View, StyleSheet, Image, TouchableOpacity} from "react-native";
+import { Text, View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { RadioButton, TextInput } from "react-native-paper";
 import CustomCheckbox from "../common-component/CustomRadioCheckbox";
@@ -21,28 +21,17 @@ const Login = ({ }) => {
         })
             .then(response => {
                 if (response.data.length == 0) {
-                    console.log('false');
+                    Alert.alert('Fail', 'Tài khoản hoặc mật khẩu không chính xác', [{ text: "Quay lại", onPress: () => console.log('Failed') }])
                 }
                 else {
                     // localStorage.setItem({'id_user': response.data[0].id_user}, {'isLogged' : 1} )
-                    setinfo(response.data[0])
-                    
-                    // _storeData = async () => {
-                    //     try {
-                    //       await AsyncStorage.setItem(
-                    //         'id',
-                    //         info.id
-                    //       );
-                    //       AsyncStorage.setItem(
-                    //         'isLogged',
-                    //         1
-                    //       );
-                    //     } catch (error) {
-                    //       // Error saving data
-                    //     }
-                    //   };
-                    //console.log(AsyncStorage.getItem('id'))
-                    
+                    try {
+                        setinfo(response.data[0])
+                        AsyncStorage.setItem('id', JSON.stringify(response.data[0].id))
+                        AsyncStorage.setItem('isLoggedd', JSON.stringify(true))
+                    } catch (err) {
+                        console.log(err)
+                    }
                     navigation.navigate("Home")
                 }
             });

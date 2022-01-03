@@ -1,25 +1,46 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, Alert } from "react-native";
 import Entypo from "react-native-vector-icons/Entypo";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Axios from 'axios';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
     const [user, setUser] = useState({});
-    useEffect(() => {
-        Axios
-            .get("http://192.168.16.101:8000/signin/getalluserinfo", {
-                params: {
-                    'id': 4
-                }
-            })
-            .then(response => setUser(response.data[0]));
+
+    useEffect(async () => {
+        try {
+            const id = await AsyncStorage.getItem('id')
+            Axios
+                .get("http://192.168.16.101:8000/signin/getalluserinfo", {
+                    params: {
+                        'id': id
+                    }
+                })
+                .then(function (response) {
+                    setUser(response.data[0]);
+                });
+        } catch (err) {
+            console.log(err)
+        }
     }, []);
+    async function logout() {
+        try {
+            AsyncStorage.setItem('id', JSON.stringify(0))
+            AsyncStorage.setItem('isLoggedd', JSON.stringify(false))
+            await Alert.alert('Đăng xuất thành công', 'Trở lại trang đăng nhập', [{ text: "OK", onPress: () => navigation.navigate("Login") }])
+            navigation.navigate("Login")
+        } catch (err) {
+            console.log(err)
+        }
+
+
+    }
     return (
         <View style={{ backgroundColor: "#fff", flex: 1 }}>
             <View style={styles.container}>
@@ -162,8 +183,8 @@ const HomeScreen = () => {
                                 width: 110,
                             }}
                         >
-                            <TouchableOpacity style={styles.backgroundIcon} onPress={() => { navigation.navigate("Login") }}>
-                                <Entypo name="clock" size={45} color="blue" />
+                            <TouchableOpacity style={styles.backgroundIcon} onPress={() => { navigation.navigate("HaNoi") }}>
+                                <Entypo name="calculator" size={45} color="blue" />
                             </TouchableOpacity>
                             <Text
                                 style={{
@@ -173,7 +194,7 @@ const HomeScreen = () => {
                                     marginTop: 10,
                                 }}
                             >
-                                Test đăng nhập
+                                Hà Nội
                             </Text>
                         </View>
                         <View
@@ -183,7 +204,7 @@ const HomeScreen = () => {
                                 width: 110,
                             }}
                         >
-                            <TouchableOpacity style={styles.backgroundIcon} onPress={() => { navigation.navigate("SignUp") }}>
+                            <TouchableOpacity style={styles.backgroundIcon} onPress={() => { navigation.navigate("VinhPhuc") }}>
                                 <MaterialCommunityIcons
                                     name="needle"
                                     size={45}
@@ -198,7 +219,7 @@ const HomeScreen = () => {
                                     marginTop: 10,
                                 }}
                             >
-                                Test đăng ký
+                                Vĩnh Phúc
                             </Text>
                         </View>
                         <View
@@ -210,6 +231,62 @@ const HomeScreen = () => {
                         >
                             <TouchableOpacity style={styles.backgroundIcon} onPress={() => { navigation.navigate("Map") }}>
                                 <Entypo
+                                    name="map"
+                                    size={45}
+                                    color="blue"
+                                />
+                            </TouchableOpacity>
+                            <Text
+                                style={{
+                                    textAlign: "center",
+                                    color: "#000",
+                                    fontSize: 18,
+                                    marginTop: 10,
+                                }}
+                            >
+                                Vị trí
+                            </Text>
+                        </View>
+
+                    </View>
+                    <View
+                        style={{
+                            marginTop: 15,
+                            marginHorizontal: 35,
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <View
+                            style={{
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: 110,
+                            }}
+                        >
+                            <TouchableOpacity style={styles.backgroundIcon} onPress={() => { navigation.navigate("Initial") }}>
+                                <Entypo name="info-with-circle" size={45} color="blue" />
+                            </TouchableOpacity>
+                            <Text
+                                style={{
+                                    textAlign: "center",
+                                    color: "#000",
+                                    fontSize: 18,
+                                    marginTop: 10,
+                                }}
+                            >
+                                Thông tin cá nhân
+                            </Text>
+                        </View>
+                        <View
+                            style={{
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: 110,
+                            }}
+                        >
+                            <TouchableOpacity style={styles.backgroundIcon} onPress={() => { navigation.navigate("SignUp") }}>
+                                <MaterialCommunityIcons
                                     name="calendar"
                                     size={45}
                                     color="blue"
@@ -223,9 +300,35 @@ const HomeScreen = () => {
                                     marginTop: 10,
                                 }}
                             >
-                                Test chức năng Map
+                                Lịch trình di chuyển
                             </Text>
                         </View>
+                        <View
+                            style={{
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: 110,
+                            }}
+                        >
+                            <TouchableOpacity style={styles.backgroundIcon} onPress={() => { logout() }}>
+                                <Entypo
+                                    name="log-out"
+                                    size={45}
+                                    color="blue"
+                                />
+                            </TouchableOpacity>
+                            <Text
+                                style={{
+                                    textAlign: "center",
+                                    color: "#000",
+                                    fontSize: 18,
+                                    marginTop: 10,
+                                }}
+                            >
+                                Đăng xuất
+                            </Text>
+                        </View>
+
                     </View>
                 </View>
             </View>

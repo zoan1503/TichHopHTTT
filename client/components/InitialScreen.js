@@ -24,15 +24,22 @@ const InitialScreen = ({ }) => {
   //   }
   // };
   //let id = AsyncStorage.getItem('id')
-  useEffect(() => {
-    Axios
-      .get("http://192.168.16.101:8000/signin/getalluserinfo", {
-        params: {
-          'id': 4
-        }
-      })
-      .then(response => setUser(response.data[0]));
-  }, []);
+  useEffect(async () => {
+    try {
+        const id = await AsyncStorage.getItem('id')
+        Axios
+            .get("http://192.168.16.101:8000/signin/getalluserinfo", {
+                params: {
+                    'id': id
+                }
+            })
+            .then(function (response) {
+                    setUser(response.data[0]);
+            });
+    } catch (err) {
+        console.log(err)
+    }
+}, []);
   function changedate(date) {
     if (typeof date !== 'undefined') {
       let ndate = date.substring(0, 10)

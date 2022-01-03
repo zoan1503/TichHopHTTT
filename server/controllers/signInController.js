@@ -20,6 +20,23 @@ module.exports = {
             res.json(response)
         })
     },
+    add_location: (req, res) => {
+        const id = req.body.id;
+        const lat = req.body.lat;
+        const lon = req.body.lon;
+        const time = req.body.time;
+        const insertQuery = "INSERT INTO location (id, lat, lon, time) VALUES(?, ?, ?, ?)"
+        db.query(insertQuery, [id, lat, lon, time], (err, results) => {
+            if (err) {
+                console.log("insert error");
+                res.send(err)
+            }
+            else {
+                res.send({ error: false, data: results, message: 'Location has been add successfully!'});
+            }
+
+        });
+    },
     get_all_reaction: (req, res) => {
         id_user = req.query.id_user;
         let sql = 'select books.id_book, book_title, image_url, reaction.reaction_id, reaction.review_id, content_review, review.id_user as reviewer_id, user2.username as reviewer, users.username as user_react, reaction.id_user, reaction.reaction_choice from reaction inner join review on reaction.review_id = review.review_id inner join books on books.id_book = review.id_book inner join users user2 on user2.id_user = review.id_user inner join users on reaction.id_user = users.id_user and users.id_user = ? order by reaction_id desc'

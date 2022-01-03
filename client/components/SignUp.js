@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { RadioButton, TextInput } from "react-native-paper";
 import CustomCheckbox from "../common-component/CustomRadioCheckbox";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+
 const SignUp = ({ }) => {
     const navigation = useNavigation();
     const [username, setusername] = useState('');
@@ -26,7 +27,7 @@ const SignUp = ({ }) => {
             address: address
         })
             .then(function (response) {
-                navigation.navigate("Login")
+                Alert.alert('Done', 'Đăng ký thành công', [{ text: "Đăng nhập ngay", onPress: () => navigation.navigate("Login") }])
             })
     }
     return (

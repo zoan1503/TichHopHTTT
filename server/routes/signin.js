@@ -8,6 +8,7 @@ router.get('/getallratingbook', signInController.get_all_rating_book);
 router.get('/getallreaction', signInController.get_all_reaction);
 router.get('/getalluserinfo', signInController.get_all_user_info);
 router.get('/checksignin', signInController.check_signin);
+router.post('/addlocation', signInController.add_location);
 router.put('/updateinfo', signInController.update_info);
 router.put('/updatepass', signInController.update_pass);
 module.exports = router;
