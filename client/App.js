@@ -21,7 +21,7 @@ function App() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Login'
+        <Stack.Navigator initialRouteName='Map'
         // screenOptions={{
         //   headerShown: false
         // }}

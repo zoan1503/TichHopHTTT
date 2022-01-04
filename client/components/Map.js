@@ -9,7 +9,82 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Map() {
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
+    const [hntoday, sethntoday] = useState({});
+    const [hnyesterday, sethnyesterday] = useState({});
+    const [vptoday, setvptoday] = useState({});
+    const [vpyesterday, setvpyesterday] = useState([]);
     let today = new Date()
+    let address = [
+        "Quận Hoàng Mai",
+        "Quận Hai Bà Trưng",
+        "Quận Đống Đa",
+        "Quận Thanh Xuân",
+        "Quận Ba Đình",
+        "Quận Cầu Giấy",
+        "Quận Hoàn Kiếm",
+        "Quận Hà Đông",
+        "Quận Long Biên",
+        "Quận Tây Hồ",
+        "Quận Bắc Từ Liêm",
+        "Quận Nam Từ Liêm",
+        "Huyện Yên Lạc",
+        "Huyện Bình Xuyên",
+        "Huyện Sông Lô",
+        "Huyện Tam Dương",
+        "Huyện Tam Đảo",
+        "Huyện Lập Thạch",
+        "Huyện Vĩnh Tường",
+        "Thành phố Vĩnh Yên",
+        "Thành phố Phúc Yên"
+    ]
+    let latlon = [
+        [20.974852, 105.822919],
+        [21.006944, 105.854167],
+        [21.007222, 105.830556],
+        [20.993445, 105.798454],
+        [21.0358791, 105.8121224],
+        [21.0286782, 105.7734043],
+        [21.028889, 105.8525],
+        [20.964944, 105.770694],
+        [21.004167, 105.969444],
+        [21.070705, 105.811831],
+        [21.054167, 105.682222],
+        [21.003333, 105.703889],
+        [21.2352, 105.5748],
+        [21.311944, 105.654722],
+        [21.418871, 105.406025],
+        [21.383056, 105.541111],
+        [21.393611, 105.616667],
+        [21.443611, 105.473056],
+        [21.221944, 105.505278],
+        [21.312424, 105.596017],
+        [21.238889, 105.705]
+    ]
+    useEffect(() => {
+        Axios
+            .get("http://192.168.16.101:8000/numcase/gethanoi", {})
+            .then(
+                function (response) {
+                    sethntoday(response.data[response.data.length - 1]);
+                    sethnyesterday(response.data[response.data.length - 6]);
+                }
+            );
+    }, []);
+    useEffect(() => {
+        Axios
+            .get("http://192.168.16.101:8000/numcase/getvinhphuc", {})
+            .then(
+                function (response) {
+                    setvptoday(response.data[response.data.length - 1]);
+                    setvpyesterday(response.data[response.data.length - 2]);
+                }
+            );
+    }, []);
+    var all = []
+
+    if (typeof (hntoday.num) != 'undefined' && typeof (vptoday.num) != 'undefined') {
+        all = { ...hntoday.num, ...vptoday.num }
+    }
     useEffect(() => {
         (async () => {
             if (Platform.OS === 'android' && !Constants.isDevice) {
@@ -50,17 +125,7 @@ export default function Map() {
         lat = location.coords.latitude
         long = location.coords.longitude
     }
-    //console.log(lat)
-    function pushLocation() {
-        // Axios.post('http://192.168.16.101:8000/signin/addlocation', {
-        //     id: 1,
-        //     lat: lat,
-        //     lon: long,
-        //     time: today,
-        // })
-        //     .then(function (response) {
-        //     })
-    }
+
     return (
         <View style={styles.container}>
             <MapView style={styles.map}
@@ -71,77 +136,21 @@ export default function Map() {
                     latitudeDelta: 0.009,
                     longitudeDelta: 0.009,
                 }} >
+
                 <Marker coordinate={{ latitude: lat, longitude: long }}
                     title="Vị trí hiện tại"
                     onSelect={() => { pushLocation() }}
                     pinColor='blue'
                 />
-                <Marker coordinate={{ latitude: 20.974852, longitude: 105.822919 }}
-                    title="Q. Hoàng Mai"
-                    description="15 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.006944, longitude: 105.854167 }}
-                    title="Q. Hai Bà Trưng"
-                    description="42 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.007222, longitude: 105.830556 }}
-                    title="Q. Đống Đa"
-                    description="53 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 20.993445, longitude: 105.798454 }}
-                    title="Q. Thanh Xuân"
-                    description="3 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.0358791, longitude: 105.8121224 }}
-                    title="Q. Ba Đình"
-                    description="29 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.0286782, longitude: 105.7734043 }}
-                    title="Q. Cầu Giấy"
-                    description="7 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.028889, longitude: 105.8525 }}
-                    title="Q. Hoàn Kiếm"
-                    description="15 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 20.964944, longitude: 105.770694 }}
-                    title="Q. Hà Đông"
-                    description="16 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.004167, longitude: 105.969444 }}
-                    title="Q. Long Biên"
-                    description="19 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.070705, longitude: 105.811831 }}
-                    title="Q. Tây Hồ"
-                    description="26 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.054167, longitude: 105.682222 }}
-                    title="Q. Bắc Từ Liêm"
-                    description="34 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.003333, longitude: 105.703889 }}
-                    title="Q. Nam Từ Liêm"
-                    description="37 ca nhiễm mới" />
+                {address && address.map(item => {
+                    return (
+                        <Marker coordinate={{ latitude: latlon[address.indexOf(item)][0], longitude: latlon[address.indexOf(item)][1] }}
+                            title={item}
+                            description={"Tổng " + all[`${item}`] + " ca nhiễm"}
+                        />
+                    )
+                })}
 
-                {/* Vĩnh Phúc */}
-
-                <Marker coordinate={{ latitude: 21.2352, longitude: 105.5748 }}
-                    title="Huyện Yên Lạc"
-                    description="37 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.311944, longitude: 105.654722 }}
-                    title="Huyện Bình Xuyên"
-                    description="37 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.418871, longitude: 105.406025 }}
-                    title="Huyện Sông Lô"
-                    description="37 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.383056, longitude: 105.541111 }}
-                    title="Huyện Tam Dương"
-                    description="37 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.393611, longitude: 105.616667 }}
-                    title="Huyện Tam Đảo"
-                    description="37 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.443611, longitude: 105.473056 }}
-                    title="Huyện Lập Thạch"
-                    description="37 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.221944, longitude: 105.505278 }}
-                    title="Huyện Vĩnh Tường"
-                    description="37 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.312424, longitude: 105.596017 }}
-                    title="Thành phố Vĩnh Yên"
-                    description="37 ca nhiễm mới" />
-                <Marker coordinate={{ latitude: 21.238889, longitude: 105.705 }}
-                    title="Thành phố Phúc Yên"
-                    description="37 ca nhiễm mới" />
             </MapView>
         </View>
     );
