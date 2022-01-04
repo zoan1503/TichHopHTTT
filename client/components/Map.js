@@ -146,6 +146,7 @@ export default function Map() {
                     return (
                         <Marker coordinate={{ latitude: latlon[address.indexOf(item)][0], longitude: latlon[address.indexOf(item)][1] }}
                             title={item}
+                            key={item}
                             description={"Tổng " + all[`${item}`] + " ca nhiễm"}
                         />
                     )

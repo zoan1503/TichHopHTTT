@@ -82,7 +82,6 @@ const Move = ({ }) => {
         .then(
           function (response) {
             setallLocation(response.data);
-            console.log(allLocation)
           }
         );
     } catch (err) {
@@ -132,7 +131,7 @@ const Move = ({ }) => {
   // ]
 
   var dataa = []
-  for (var i = 0; i < allLocation.length; i++) {
+  for (var i = allLocation.length - 1; i >= 0; i--) {
     var b = { 'id': ids[i], 'quan': lists[i], 'time': times[i] }
     dataa.push(b)
   }
@@ -140,8 +139,8 @@ const Move = ({ }) => {
     <View style={styles.body}>
       <View style={styles.list}>
         <Text style={styles.row}>ID</Text>
-        <Text style={styles.row}>Địa điểm</Text>
-        <Text style={styles.row}>Thời gian</Text>
+        <Text style={styles.row2}>Địa điểm</Text>
+        <Text style={styles.row3}>Thời gian</Text>
       </View>
       <FlatList
         data={dataa}
@@ -149,8 +148,8 @@ const Move = ({ }) => {
         renderItem={({ item }) =>
           <View style={styles.list} >
             <Text style={styles.row}>{item.id}</Text>
-            <Text style={styles.row}>{item.quan}</Text>
-            <Text style={styles.row}>{item.time}</Text>
+            <Text style={styles.row2}>{item.quan}</Text>
+            <Text style={styles.row3}>{item.time}</Text>
           </View>}>
       </FlatList>
     </View>
@@ -165,11 +164,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     borderBottomWidth: .5,
-    marginLeft: 30
+    marginLeft: 5,
   },
   row: {
     backgroundColor: '#fff',
     flex: 1,
+    fontSize: 15,
+    paddingHorizontal: 2,
+    paddingVertical: 10,
+    textAlign: 'center',
+  },
+  row2: {
+    backgroundColor: '#fff',
+    flex: 2,
+    fontSize: 15,
+    paddingHorizontal: 2,
+    paddingVertical: 10,
+    textAlign: 'center'
+  },
+  row3: {
+    backgroundColor: '#fff',
+    flex: 2,
     fontSize: 15,
     paddingHorizontal: 2,
     paddingVertical: 10,

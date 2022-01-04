@@ -15,7 +15,6 @@ const VinhPhuc = ({ }) => {
                 }
             );
     }, []);
-    console.log(yesterday)
     var dataa = []
     var quan = [
         "Thành phố Vĩnh Yên",
