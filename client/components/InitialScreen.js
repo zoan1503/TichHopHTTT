@@ -6,40 +6,43 @@ import CustomCheckbox from "../common-component/CustomRadioCheckbox";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import eng from '../Language/eng.json'
+import vie from '../Language/vie.json'
 
 const InitialScreen = ({ }) => {
   const [text, setText] = React.useState("Em Quang óc chó");
   const [checked, setChecked] = React.useState(false);
   const [user, setUser] = useState({});
-  // let id = 0
-  // const _retrieveData = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem('id');
-  //     if (value !== null) {
-  //       // We have data!!
-  //       id = value
-  //     }
-  //   } catch (error) {
-  //     // Error retrieving data
-  //   }
-  // };
-  //let id = AsyncStorage.getItem('id')
+  const [langu, setlangu] = useState(vie)
+
   useEffect(async () => {
     try {
-        const id = await AsyncStorage.getItem('id')
-        Axios
-            .get("http://192.168.16.101:8000/signin/getalluserinfo", {
-                params: {
-                    'id': id
-                }
-            })
-            .then(function (response) {
-                    setUser(response.data[0]);
-            });
+      const lg = await AsyncStorage.getItem('language')
+      if (lg == 'vie') {
+        setlangu(vie)
+      } else {
+        setlangu(eng)
+      }
     } catch (err) {
-        console.log(err)
+      console.log(err)
     }
-}, []);
+  }, []);
+  useEffect(async () => {
+    try {
+      const id = await AsyncStorage.getItem('id')
+      Axios
+        .get("http://192.168.16.101:8000/signin/getalluserinfo", {
+          params: {
+            'id': id
+          }
+        })
+        .then(function (response) {
+          setUser(response.data[0]);
+        });
+    } catch (err) {
+      console.log(err)
+    }
+  }, []);
   function changedate(date) {
     if (typeof date !== 'undefined') {
       let ndate = date.substring(0, 10)
@@ -59,35 +62,35 @@ const InitialScreen = ({ }) => {
       </View>
       <View style={{ marginHorizontal: 15 }}>
         <View>
-          <Text>Họ và tên *</Text>
+          <Text>{langu.fullname} *</Text>
           <TextInput
             mode="outlined"
             value={user.fullname}
           />
         </View>
         <View style={{ marginTop: 20 }}>
-          <Text>Ngày tháng năm sinh *</Text>
+          <Text>{langu.birth} *</Text>
           <TextInput
             mode="outlined"
             value={changedate(user.birth)}
           />
         </View>
         <View style={{ marginTop: 20 }}>
-          <Text>Giới tính *</Text>
+          <Text>{langu.gender} *</Text>
           <TextInput
             mode="outlined"
             value={user.gender == 1 ? "Nam" : "Nữ"}
           />
         </View>
         <View style={{ marginTop: 20 }}>
-          <Text>Số CMND / CCCD *</Text>
+          <Text>{langu.idcard} *</Text>
           <TextInput
             mode="outlined"
             value={user.cccd}
           />
         </View>
         <View style={{ marginTop: 20 }}>
-          <Text>Địa chỉ *</Text>
+          <Text>{langu.address} *</Text>
           <TextInput
             mode="outlined"
             value={user.address}

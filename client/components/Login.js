@@ -29,6 +29,7 @@ const Login = ({ }) => {
                         setinfo(response.data[0])
                         AsyncStorage.setItem('id', JSON.stringify(response.data[0].id))
                         AsyncStorage.setItem('isLoggedd', JSON.stringify(true))
+                        AsyncStorage.setItem('language', 'vie')
                     } catch (err) {
                         console.log(err)
                     }
@@ -36,6 +37,7 @@ const Login = ({ }) => {
                 }
             });
     }
+
     return (
         <ScrollView>
             <View style={{ alignSelf: "center", marginTop: 20 }}>
@@ -46,50 +48,33 @@ const Login = ({ }) => {
             </View>
             <View style={{ marginHorizontal: 15 }}>
                 <View>
-                    <Text>Tên đăng nhập *</Text>
+                    <Text>Tài khoản / Username *</Text>
                     <TextInput
                         mode="outlined"
                         onChangeText={(text) => setusername(text)}
                     />
                 </View>
                 <View style={{ marginTop: 20 }}>
-                    <Text>Mật khẩu *</Text>
+                    <Text>Mật khẩu / Password *</Text>
                     <TextInput
                         mode="outlined"
                         onChangeText={(text) => setpassword(text)}
-                        secureTextEntry={true} 
+                        secureTextEntry={true}
                     />
-
-                    {/* <View style={{ marginTop: 20 }}>
-                    <Text style={{ marginBottom: 5 }}>Giới tính *</Text>
-                    <View style={{ flexDirection: "row" }}>
-                        <CustomCheckbox
-                            label="Nam"
-                            checked={checked}
-                            onChecked={handleChecked}
-                        />
-                        <CustomCheckbox
-                            label="Nữ"
-                            checked={checked}
-                            onChecked={handleChecked}
-                        />
-                    </View>
-                </View> */}
-
 
                 </View>
                 <TouchableOpacity
                     style={{ marginTop: 20, alignSelf: "center" }}
                     onPress={() => { handleSubmit() }}>
-                    <Text style={{ fontSize: 18, color: '#000' }}>Đăng nhập</Text>
+                    <Text style={{ fontSize: 18, color: '#000' }}>Đăng nhập / Signin</Text>
                 </TouchableOpacity>
                 <Text style={{ marginTop: 20, alignSelf: "center" }}>
-                    Chưa có tài khoản?
+                    Chưa có tài khoản? / No Account?
                 </Text>
                 <TouchableOpacity
                     style={{ marginTop: 20, alignSelf: "center" }}
                     onPress={() => { handleSubmit() }}>
-                    <Text style={{ fontSize: 18, color: '#000' }} onPress={() => { navigation.navigate("SignUp") }}>Đăng ký</Text>
+                    <Text style={{ fontSize: 18, color: '#000' }} onPress={() => { navigation.navigate("SignUp") }}>Đăng ký / SignUp</Text>
                 </TouchableOpacity>
             </View>
             <View>

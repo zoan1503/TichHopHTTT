@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, Alert } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, Alert, Switch } from "react-native";
 import Entypo from "react-native-vector-icons/Entypo";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -8,14 +8,31 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Axios from 'axios';
+import eng from '../Language/eng.json'
+import vie from '../Language/vie.json'
 
 const HomeScreen = () => {
     const navigation = useNavigation();
     const [user, setUser] = useState({});
-
+    const [isEnable, setisEnable] = useState(true);
+    const [textSwitch, settextSwitch] = useState('Tiếng Việt');
+    const [langu, setlangu] = useState(vie)
+    useEffect(async () => {
+        try {
+            const lg = await AsyncStorage.getItem('language')
+            if (lg == 'vie') {
+                setlangu(vie)
+            } else {
+                setlangu(eng)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }, []);
     useEffect(async () => {
         try {
             const id = await AsyncStorage.getItem('id')
+            //const lg = await AsyncStorage.getItem('language')
             Axios
                 .get("http://192.168.16.101:8000/signin/getalluserinfo", {
                     params: {
@@ -25,6 +42,11 @@ const HomeScreen = () => {
                 .then(function (response) {
                     setUser(response.data[0]);
                 });
+            // if (lg == 'vie') {
+            //     setlangu(vie)
+            // } else {
+            //     setlangu(eng)
+            // }
         } catch (err) {
             console.log(err)
         }
@@ -33,13 +55,31 @@ const HomeScreen = () => {
         try {
             AsyncStorage.setItem('id', JSON.stringify(0))
             AsyncStorage.setItem('isLoggedd', JSON.stringify(false))
-            await Alert.alert('Đăng xuất thành công', 'Trở lại trang đăng nhập', [{ text: "OK", onPress: () => navigation.navigate("Login") }])
+            Alert.alert('Đăng xuất thành công', 'Trở lại trang đăng nhập', [{ text: "OK", onPress: () => navigation.navigate("Login") }])
             navigation.navigate("Login")
         } catch (err) {
             console.log(err)
         }
+    }
 
-
+    const toggleSwitch = () => {
+        setisEnable(previousState => !previousState)
+        Alert.alert('Thông báo', 'Đã thay đổi ngôn ngữ', [{ text: "OK", onPress: () => navigation.navigate("Home") }])
+        if (isEnable != false) {
+            try {
+                settextSwitch('English')
+                AsyncStorage.setItem('language', 'eng')
+            } catch (err) {
+                console.log(err)
+            }
+        } else {
+            try {
+                settextSwitch('Tiếng Việt')
+                AsyncStorage.setItem('language', 'vie')
+            } catch (err) {
+                console.log(err)
+            }
+        }
     }
     return (
         <View style={{ backgroundColor: "#fff", flex: 1 }}>
@@ -47,10 +87,10 @@ const HomeScreen = () => {
                 <View style={styles.header}>
                     <Image
                         style={styles.stretch}
-                        source={require("../assets/a.jpg")}
+                        source={require("../assets/default-avatar.png")}
                     />
                     <View style={styles.userInfo}>
-                        <Text style={{ fontSize: 20 }}>Xin chào</Text>
+                        <Text style={{ fontSize: 20 }}>{langu.hello}</Text>
                         <Text
                             style={{
                                 fontSize: 25,
@@ -60,13 +100,23 @@ const HomeScreen = () => {
                             {user.fullname}
                         </Text>
                     </View>
+                    <View style={{ marginLeft: 120 }}>
+                        <Text style={{ marginLeft: -7 }}>
+                            {textSwitch}
+                        </Text>
+                        <Switch
+                            style={{ marginTop: 7 }}
+                            trackColor={{ false: 'gray' }}
+                            thumbColor={isEnable ? '#f4f3f4' : '#f3f4f3'}
+                            onValueChange={toggleSwitch}
+                            value={isEnable}
+                        />
+                    </View>
                 </View>
                 <View style={styles.mainFunc}>
                     <LinearGradient
-                        colors={['#00C1FF', '#2524FF']}
-
-                        style={{ borderRadius: 15 }}
-                    >
+                        colors={['#59bffb', '#2173ff']}
+                        style={{ borderRadius: 15 }}>
                         <TouchableOpacity style={styles.first} onPress={() => { navigation.navigate("Initial") }}>
                             <View
                                 style={{
@@ -92,15 +142,14 @@ const HomeScreen = () => {
                                         fontWeight: "900",
                                     }}
                                 >
-                                    Test thông tin cá nhân
+                                    Test {langu.info}
                                 </Text>
                             </View>
                         </TouchableOpacity>
                     </LinearGradient>
                     <LinearGradient
-                        colors={['#9AEB0C', '#24CF5F']}
-                        style={{ borderRadius: 15 }}
-                    >
+                        colors={['#69efac', '#1dcebb']}
+                        style={{ borderRadius: 15 }}>
                         <TouchableOpacity style={styles.second} onPress={() => { navigation.navigate("HaNoi") }}>
                             <View
                                 style={{
@@ -132,7 +181,7 @@ const HomeScreen = () => {
                         </TouchableOpacity>
                     </LinearGradient>
                     <LinearGradient
-                        colors={['#FF3359', '#FF7A2D']}
+                        colors={['#fe928d', '#fe6c66']}
 
                         style={{ borderRadius: 15 }}
                     >
@@ -194,7 +243,7 @@ const HomeScreen = () => {
                                     marginTop: 10,
                                 }}
                             >
-                                Hà Nội
+                                {langu.hanoi}
                             </Text>
                         </View>
                         <View
@@ -219,7 +268,7 @@ const HomeScreen = () => {
                                     marginTop: 10,
                                 }}
                             >
-                                Vĩnh Phúc
+                                {langu.vinhphuc}
                             </Text>
                         </View>
                         <View
@@ -244,7 +293,7 @@ const HomeScreen = () => {
                                     marginTop: 10,
                                 }}
                             >
-                                Vị trí
+                                {langu.location}
                             </Text>
                         </View>
 
@@ -275,7 +324,7 @@ const HomeScreen = () => {
                                     marginTop: 10,
                                 }}
                             >
-                                Thông tin cá nhân
+                                {langu.info}
                             </Text>
                         </View>
                         <View
@@ -300,7 +349,7 @@ const HomeScreen = () => {
                                     marginTop: 10,
                                 }}
                             >
-                                Lịch trình di chuyển
+                                {langu.calendar}
                             </Text>
                         </View>
                         <View
@@ -325,7 +374,7 @@ const HomeScreen = () => {
                                     marginTop: 10,
                                 }}
                             >
-                                Đăng xuất
+                                {langu.logout}
                             </Text>
                         </View>
 
@@ -384,7 +433,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     footer: {
-        backgroundColor: "#c2fffb",
+        backgroundColor: "#eef1fa",
         alignSelf: "stretch",
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,

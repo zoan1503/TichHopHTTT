@@ -2,9 +2,23 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, FlatList, StyleSheet } from 'react-native'
 import Axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import eng from '../Language/eng.json'
+import vie from '../Language/vie.json'
 const Move = ({ }) => {
   const [allLocation, setallLocation] = useState([]);
-
+  const [langu, setlangu] = useState(vie)
+  useEffect(async () => {
+    try {
+      const lg = await AsyncStorage.getItem('language')
+      if (lg == 'vie') {
+        setlangu(vie)
+      } else {
+        setlangu(eng)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }, []);
   let address = [
     "Quận Hoàng Mai",
     "Quận Hai Bà Trưng",
@@ -139,8 +153,8 @@ const Move = ({ }) => {
     <View style={styles.body}>
       <View style={styles.list}>
         <Text style={styles.row}>ID</Text>
-        <Text style={styles.row2}>Địa điểm</Text>
-        <Text style={styles.row3}>Thời gian</Text>
+        <Text style={styles.row2}>{langu.place}</Text>
+        <Text style={styles.row3}>{langu.time}</Text>
       </View>
       <FlatList
         data={dataa}

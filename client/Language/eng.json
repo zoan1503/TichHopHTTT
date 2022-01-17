@@ -1,0 +1,20 @@
+{
+    "hello": "Hello",
+    "hanoi": "Ha Noi",
+    "vinhphuc": "Vinh Phuc",
+    "location": "Your location",
+    "info": "Your information",
+    "calendar": "Travel schedule",
+    "logout": "Logout",
+    "district": "District",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "place": "Place",
+    "time": "Time",
+    "fullname": "Fullname",
+    "birth": "Birthday",
+    "gender": "Gender",
+    "idcard": "Your ID Card",
+    "address": "Address",
+    "case": "Case in"
+}

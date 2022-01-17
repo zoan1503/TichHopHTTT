@@ -1,0 +1,20 @@
+{
+    "hello": "Xin chào",
+    "hanoi": "Hà Nội",
+    "vinhphuc": "Vĩnh Phúc",
+    "location": "Vị trí",
+    "info": "Thông tin cá nhân",
+    "calendar": "Lịch trình di chuyển",
+    "logout": "Đăng xuất",
+    "district": "Quận/ Huyện",
+    "today": "Hôm nay",
+    "tomorrow": "Hôm qua",
+    "place": "Địa điểm",
+    "time": "Thời gian",
+    "fullname": "Họ và tên",
+    "birth": "Ngày tháng năm sinh",
+    "gender": "Giới tính",
+    "idcard": "CMND / CCCD",
+    "address": "Địa chỉ",
+    "case": "Ca nhiễm"
+}

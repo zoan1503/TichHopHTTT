@@ -1,10 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, FlatList, StyleSheet } from 'react-native'
 import Axios from 'axios';
+import eng from '../Language/eng.json'
+import vie from '../Language/vie.json'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const VinhPhuc = ({ }) => {
     const [today, setToday] = useState({});
     const [yesterday, setYesterday] = useState({});
-
+    const [langu, setlangu] = useState(vie)
+    useEffect(async () => {
+        try {
+            const lg = await AsyncStorage.getItem('language')
+            if (lg == 'vie') {
+                setlangu(vie)
+            } else {
+                setlangu(eng)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }, []);
     useEffect(() => {
         Axios
             .get("http://192.168.16.101:8000/numcase/getvinhphuc", {})
@@ -43,9 +58,9 @@ const VinhPhuc = ({ }) => {
     return (
         <View style={styles.body}>
             <View style={styles.list}>
-                <Text style={styles.row}>Quận/ Huyện</Text>
-                <Text style={styles.row}>Hôm nay</Text>
-                <Text style={styles.row}>Hôm qua</Text>
+                <Text style={styles.row}>{langu.district}</Text>
+                <Text style={styles.row}>{langu.today}</Text>
+                <Text style={styles.row}>{langu.tomorrow}</Text>
             </View>
             <FlatList
                 data={dataa}
