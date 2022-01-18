@@ -16,5 +16,8 @@
     "gender": "Gender",
     "idcard": "Your ID Card",
     "address": "Address",
-    "case": "Case in"
+    "case": "Case in",
+    "recovery": "Recovery",
+    "death": "Death",
+    "warning": "WARNING! YOUR AREA HAS NEW CASES OF COVID-19"
 }

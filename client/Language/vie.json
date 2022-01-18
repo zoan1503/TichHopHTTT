@@ -16,5 +16,8 @@
     "gender": "Giới tính",
     "idcard": "CMND / CCCD",
     "address": "Địa chỉ",
-    "case": "Ca nhiễm"
+    "case": "Ca nhiễm",
+    "recovery": "Hồi phục",
+    "death": "Tử vong",
+    "warning": "CẢNH BÁO! KHU VỰC XUNG QUANH ĐÃ CÓ CA NHIỄM MỚI"
 }

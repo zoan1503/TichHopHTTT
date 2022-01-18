@@ -11,6 +11,7 @@ import Axios from 'axios';
 import eng from '../Language/eng.json'
 import vie from '../Language/vie.json'
 
+
 const HomeScreen = () => {
     const navigation = useNavigation();
     const [user, setUser] = useState({});
@@ -69,6 +70,7 @@ const HomeScreen = () => {
             try {
                 settextSwitch('English')
                 AsyncStorage.setItem('language', 'eng')
+                setlangu(eng)
             } catch (err) {
                 console.log(err)
             }
@@ -76,6 +78,7 @@ const HomeScreen = () => {
             try {
                 settextSwitch('Tiếng Việt')
                 AsyncStorage.setItem('language', 'vie')
+                setlangu(vie)
             } catch (err) {
                 console.log(err)
             }
@@ -100,18 +103,19 @@ const HomeScreen = () => {
                             {user.fullname}
                         </Text>
                     </View>
-                    <View style={{ marginLeft: 120 }}>
-                        <Text style={{ marginLeft: -7 }}>
-                            {textSwitch}
-                        </Text>
-                        <Switch
-                            style={{ marginTop: 7 }}
-                            trackColor={{ false: 'gray' }}
-                            thumbColor={isEnable ? '#f4f3f4' : '#f3f4f3'}
-                            onValueChange={toggleSwitch}
-                            value={isEnable}
-                        />
-                    </View>
+
+                </View>
+                <View style={{ marginLeft: 230, flexDirection: 'row' }}>
+                    <Switch
+                        style={{ marginTop: 7 }}
+                        trackColor={{ false: 'gray' }}
+                        thumbColor={isEnable ? '#f4f3f4' : '#f3f4f3'}
+                        onValueChange={toggleSwitch}
+                        value={isEnable}
+                    />
+                    <Text style={{ marginLeft: 10, marginTop: 13 }}>
+                        {textSwitch}
+                    </Text>
                 </View>
                 <View style={styles.mainFunc}>
                     <LinearGradient
@@ -142,7 +146,17 @@ const HomeScreen = () => {
                                         fontWeight: "900",
                                     }}
                                 >
-                                    Test {langu.info}
+                                    {langu.case}
+                                </Text>
+                                <Text
+                                    style={{
+                                        color: "#fff",
+                                        fontSize: 20,
+                                        textAlign: "center",
+                                        fontWeight: "900",
+                                    }}
+                                >
+                                    16838
                                 </Text>
                             </View>
                         </TouchableOpacity>
@@ -175,7 +189,17 @@ const HomeScreen = () => {
                                         fontWeight: "900",
                                     }}
                                 >
-                                    Hà Nội
+                                    {langu.recovery}
+                                </Text>
+                                <Text
+                                    style={{
+                                        color: "#fff",
+                                        fontSize: 20,
+                                        textAlign: "center",
+                                        fontWeight: "900",
+                                    }}
+                                >
+                                    8692
                                 </Text>
                             </View>
                         </TouchableOpacity>
@@ -210,19 +234,66 @@ const HomeScreen = () => {
                                         fontWeight: "900",
                                     }}
                                 >
-                                    Vĩnh Phúc
+                                    {langu.death}
+                                </Text>
+                                <Text
+                                    style={{
+                                        color: "#fff",
+                                        fontSize: 20,
+                                        textAlign: "center",
+                                        fontWeight: "900",
+                                    }}
+                                >
+                                    184
                                 </Text>
                             </View>
                         </TouchableOpacity>
                     </LinearGradient>
                 </View>
+
                 <View style={styles.footer}>
+                    <LinearGradient
+                        colors={['#EA4C46', '#EA4C46']}
+
+                        style={{ borderRadius: 0 }}
+                    >
+                        <TouchableOpacity style={styles.fourth} onPress={() => { navigation.navigate("VinhPhuc") }}>
+                            {/* <View
+                                style={{
+                                    width: 50,
+                                    height: 50,
+                                    backgroundColor: "#fff",
+                                    borderWidth: 5,
+                                    borderColor: "#24ffff",
+                                    borderRadius: 30,
+                                    marginTop: 6,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Entypo name="shield" size={30} />
+                            </View> */}
+                            <View style={{ marginTop: 25 }}>
+                                <Text
+                                    style={{
+                                        color: "#fff",
+                                        fontSize: 12,
+                                        textAlign: "center",
+                                        fontWeight: "900",
+                                    }}
+                                >
+                                    {langu.warning}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    </LinearGradient>
                     <View
                         style={{
                             marginTop: 15,
                             marginHorizontal: 35,
                             flexDirection: "row",
                             justifyContent: "space-between",
+                            marginLeft: 25
                         }}
                     >
                         <View
@@ -230,8 +301,7 @@ const HomeScreen = () => {
                                 justifyContent: "center",
                                 alignItems: "center",
                                 width: 110,
-                            }}
-                        >
+                            }}>
                             <TouchableOpacity style={styles.backgroundIcon} onPress={() => { navigation.navigate("HaNoi") }}>
                                 <Entypo name="calculator" size={45} color="blue" />
                             </TouchableOpacity>
@@ -304,6 +374,7 @@ const HomeScreen = () => {
                             marginHorizontal: 35,
                             flexDirection: "row",
                             justifyContent: "space-between",
+                            marginLeft: 25
                         }}
                     >
                         <View
@@ -357,6 +428,7 @@ const HomeScreen = () => {
                                 justifyContent: "center",
                                 alignItems: "center",
                                 width: 110,
+                                marginBottom: 20
                             }}
                         >
                             <TouchableOpacity style={styles.backgroundIcon} onPress={() => { logout() }}>
@@ -406,7 +478,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     mainFunc: {
-        marginTop: 20,
+        marginTop: 15,
         flexDirection: "row",
         justifyContent: "space-between",
         marginHorizontal: 15,
@@ -430,6 +502,13 @@ const styles = StyleSheet.create({
         height: 150,
         // backgroundColor: "red",
         borderRadius: 15,
+        alignItems: "center",
+    },
+    fourth: {
+        width: width * 1,
+        height: 60,
+        // backgroundColor: "blue",
+        borderRadius: 0,
         alignItems: "center",
     },
     footer: {

@@ -14,7 +14,7 @@ const HaNoi = ({ }) => {
             .then(
                 function (response) {
                     setToday(response.data[response.data.length - 1]);
-                    setYesterday(response.data[response.data.length - 6]);
+                    setYesterday(response.data[response.data.length - 12]);
                 }
             );
     }, []);
